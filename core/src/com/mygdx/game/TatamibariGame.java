@@ -1,5 +1,10 @@
 package com.mygdx.game;
 
+/*
+ * Tatamibari
+ * 
+ */
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
