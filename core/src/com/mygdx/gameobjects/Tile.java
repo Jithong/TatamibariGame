@@ -54,6 +54,16 @@ public class Tile extends Actor {//Actor vs Image?
                 Gdx.app.log("Tile","was clicked");
                 return true;
             }
+
+            @Override
+            public void touchDragged(InputEvent event, float x, float y, int pointer) {
+                Gdx.app.log("Tile","was dragged by");
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
+            }
         });
     }
 
