@@ -1,6 +1,8 @@
 package com.mygdx.gameobjects;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 
 import java.util.ArrayList;
@@ -39,7 +41,53 @@ public class Board extends Group {
 
     }
 
-    public Set<Tile> getRectangularSelection(Tile firstTile, Tile lastTile){
+    public Tile getTile(int row, int col) {
+        //do i need try/catch here
+        try{
+            return tiles[row][col];
+        }
+        catch (IndexOutOfBoundsException e){
+            System.out.println(e.getMessage());
+            Gdx.app.log("getTile", "index out of bounds");
+            return null;
+        }
+    }
+    /*
+    public Tile getTile(int index) {
+        int row = index/rows;
+        int col = index%rows;
+        return tiles[row][col];
+    }
+    */
+    /*
+    public void setSymbol(int row, int col, Tile.Symbol symbol){
+        Tile tile;
+        try{
+            tile = getTile(row, col);
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());//index out of bounds
+            return;
+        }
+        tile.setSymbol(symbol);
+    }
+    */
+
+    public void clearSelection(){
+        for (Actor actor : getChildren()) {
+            Tile tile = (Tile) actor;
+            tile.setSelected(false);
+        }
+    }
+
+    public void select(Tile firstTile, Tile lastTile){
+        Set<Tile> tilesSelected = getRectangularSelection(firstTile, lastTile);
+        for (Tile t : tilesSelected){
+            t.setSelected(true);
+        }
+    }
+
+    private Set<Tile> getRectangularSelection(Tile firstTile, Tile lastTile){
         Set<Tile> selection = new HashSet<Tile>();
         int row1 = firstTile.getRow();
         int col1 = firstTile.getCol();
@@ -64,35 +112,4 @@ public class Board extends Group {
         }
         return selection;
     }
-
-    public Tile getTile(int row, int col) {
-        //do i need try/catch here
-        try{
-            return tiles[row][col];
-        }
-        catch (IndexOutOfBoundsException e){
-            System.out.println(e.getMessage());
-            Gdx.app.log("getTile", "index out of bounds");
-            return null;
-        }
-    }
-    /*
-    public Tile getTile(int index) {
-        int row = index/rows;
-        int col = index%rows;
-        return tiles[row][col];
-    }
-    */
-    public void setSymbol(int row, int col, Tile.Symbol symbol){
-        Tile tile;
-        try{
-            tile = getTile(row, col);
-        }
-        catch(Exception e){
-            System.out.println(e.getMessage());//index out of bounds
-            return;
-        }
-        tile.setSymbol(symbol);
-    }
-
 }

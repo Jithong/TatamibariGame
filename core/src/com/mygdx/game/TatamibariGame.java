@@ -24,7 +24,7 @@ public class TatamibariGame extends Game {
 	@Override
 	public void create () {
 
-        world = new GameWorld();
+        world = new GameWorld(5, 5);
 	}
 
 

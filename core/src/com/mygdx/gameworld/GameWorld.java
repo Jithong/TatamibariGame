@@ -29,10 +29,10 @@ public class GameWorld extends Stage {
     private Set<Tile> tilesSelected;//this needs to be a rectangular region
     // containing all tiles in a rectangle from first tile to last tile (corner to corner)
 
-    public GameWorld(){
+    public GameWorld(int rows, int cols){
         super(new ScreenViewport());
 
-        board = new Board(5,5);
+        board = new Board(rows, cols);
         tilesSelected = new HashSet<Tile>();
 
         addActor(board);
@@ -52,18 +52,15 @@ public class GameWorld extends Stage {
 
         firstTile = hit(tileHitPosition.x, tileHitPosition.y, false);//what was touchable again (3rd param)
 
-        Gdx.app.log("hit","registered by stage");
+        //Gdx.app.log("hit","registered by stage");
+
         if (firstTile != null){
             tilesSelected.add(firstTile);
-            for (Actor actor : board.getChildren()) {
-                Tile tile = (Tile) actor;
-                tile.setSelected(false);
-                tile.setColor(Color.WHITE);
-            }
-            firstTile.setSelected(true);
-            firstTile.setColor(Color.RED);
 
-            System.out.println(firstTile.getRow() + ", " + firstTile.getCol());
+            board.clearSelection();
+            firstTile.setSelected(true);
+
+            System.out.println("(" + firstTile.getRow() + ", " + firstTile.getCol() + ")");
             lastTile = firstTile;
         }
         return true;
@@ -74,37 +71,18 @@ public class GameWorld extends Stage {
         tileHitPosition = stageToScreenCoordinates(new Vector2(screenX, screenY));
         currentTile = hit(tileHitPosition.x, tileHitPosition.y, false);
 
-        Gdx.app.log("drag","registered by stage");
+        //Gdx.app.log("drag","registered by stage");
+
         if (currentTile != null){//if a tile is hit
             if (currentTile != lastTile){//check to only run the following code if currentTile changes
                 lastTile = currentTile;
-                //add to set of current selection
-                //need a function in board to return a rectangular region, taking firstTile and currentTile
-                tilesSelected = board.getRectangularSelection(firstTile, lastTile);
 
-                //make this into a board function (boardClearSelection)
-                for (Actor actor : board.getChildren()) {
-                    Tile tile = (Tile) actor;
-                    tile.setSelected(false);
-                }
+                board.clearSelection();//to account for cases where selection shrinks
+                board.select(firstTile, lastTile);//selects a rectangular region and marks them red (for now)
 
-                for (Tile t : tilesSelected){
-                    t.setSelected(true);
-                }
-
-                for (Actor actor : board.getChildren()){
-                    Tile tile = (Tile)actor;
-                    if(tile.isSelected()){
-                        tile.setColor(Color.RED);
-                    }
-                    else{
-                        tile.setColor(Color.WHITE);
-                    }
-                }
-
+                System.out.println("(" + currentTile.getRow() + ", " + currentTile.getCol() + ")");
             }
 
-            System.out.println("(" + currentTile.getRow() + ", " + currentTile.getCol() + ")");
         }
 
         return true;

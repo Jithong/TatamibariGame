@@ -104,6 +104,12 @@ public class Tile extends Actor {//Actor vs Image?
     }
     public void setSelected(boolean b){
         selected = b;
+        if (selected){
+            setColor(Color.RED);
+        }
+        else{
+            setColor(Color.WHITE);
+        }
     }
 
     public Symbol getSymbol(){
