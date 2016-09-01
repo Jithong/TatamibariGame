@@ -1,16 +1,9 @@
 package com.mygdx.gameobjects;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 /**
  * Created by Gayming on 8/31/2016.
@@ -30,7 +23,8 @@ public class Tile extends Actor {//Actor vs Image?
     private int row;
     private int col;
 
-    private boolean selected;
+    private boolean selected;//current selection (input handling)
+    private boolean assigned;//boolean for whether the tile has been assigned a color or not
 
     //private Color color; //this is part of Actor class
     private Symbol symbol;
@@ -47,7 +41,7 @@ public class Tile extends Actor {//Actor vs Image?
 
         setColor(Color.WHITE);
         symbol = Symbol.NONE;
-        selected = false;
+        assigned = false;
 
         sr = new ShapeRenderer();
         setBounds(getX(), getY(), getWidth(), getHeight());
@@ -100,9 +94,16 @@ public class Tile extends Actor {//Actor vs Image?
         return selected;
     }
 
+    public boolean isAssigned() {
+        return assigned;
+    }
 
-    public void setSelected(){
-        selected = true;
+
+    public void setAssigned(boolean b){
+        assigned = b;
+    }
+    public void setSelected(boolean b){
+        selected = b;
     }
 
     public Symbol getSymbol(){

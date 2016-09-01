@@ -3,6 +3,11 @@ package com.mygdx.gameobjects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * Created by Gayming on 8/31/2016.
  */
@@ -34,17 +39,50 @@ public class Board extends Group {
 
     }
 
+    public Set<Tile> getRectangularSelection(Tile firstTile, Tile lastTile){
+        Set<Tile> selection = new HashSet<Tile>();
+        int row1 = firstTile.getRow();
+        int col1 = firstTile.getCol();
+        int row2 = lastTile.getRow();
+        int col2 = lastTile.getCol();
 
-    public Tile getTile(int row, int col) throws Exception{
-        //do i need this try/catch here
-        return tiles[row][col];
+        if (row1 > row2){
+            int temp = row1;
+            row1 = row2;
+            row2 = temp;
+        }
+        if (col1 > col2){
+            int temp = col1;
+            col1 = col2;
+            col2 = temp;
+        }
+
+        for (int i = row1; i <= row2; i++){
+            for (int j = col1; j <= col2; j++){
+                selection.add(getTile(i, j));
+            }
+        }
+        return selection;
     }
-    public Tile getTile(int index) throws Exception{
+
+    public Tile getTile(int row, int col) {
+        //do i need try/catch here
+        try{
+            return tiles[row][col];
+        }
+        catch (IndexOutOfBoundsException e){
+            System.out.println(e.getMessage());
+            Gdx.app.log("getTile", "index out of bounds");
+            return null;
+        }
+    }
+    /*
+    public Tile getTile(int index) {
         int row = index/rows;
         int col = index%rows;
         return tiles[row][col];
     }
-
+    */
     public void setSymbol(int row, int col, Tile.Symbol symbol){
         Tile tile;
         try{
