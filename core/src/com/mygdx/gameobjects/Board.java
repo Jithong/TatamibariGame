@@ -87,6 +87,10 @@ public class Board extends Group {
         }
     }
 
+    public void assignColorToSelection(Color color){
+
+    }
+
     private Set<Tile> getRectangularSelection(Tile firstTile, Tile lastTile){
         Set<Tile> selection = new HashSet<Tile>();
         int row1 = firstTile.getRow();

@@ -47,11 +47,8 @@ public class GameWorld extends Stage {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-
         tileHitPosition = stageToScreenCoordinates(new Vector2(screenX, screenY));
-
         firstTile = hit(tileHitPosition.x, tileHitPosition.y, false);//what was touchable again (3rd param)
-
         //Gdx.app.log("hit","registered by stage");
 
         if (firstTile != null){
@@ -70,7 +67,6 @@ public class GameWorld extends Stage {
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         tileHitPosition = stageToScreenCoordinates(new Vector2(screenX, screenY));
         currentTile = hit(tileHitPosition.x, tileHitPosition.y, false);
-
         //Gdx.app.log("drag","registered by stage");
 
         if (currentTile != null){//if a tile is hit
@@ -82,9 +78,7 @@ public class GameWorld extends Stage {
 
                 System.out.println("(" + currentTile.getRow() + ", " + currentTile.getCol() + ")");
             }
-
         }
-
         return true;
     }
 
@@ -92,7 +86,9 @@ public class GameWorld extends Stage {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 
         //clean up
-        //f(firstTile, currentTile) set selection assigned to true to keep track of tiles that are assigned a color.
+        //set tiles' assigned to true to keep track of tiles that are assigned a color.
+        board.assignColorToSelection(Color.RED);
+
         //if a new selection has overlaps with assigned tiles (checked at touchUp) then the old one will be invalidated.
         //need to make a board function to do that as well (keep assigned grouped together maybe use Group of actors?
         // each with diff color and symbol, which determines shape)
