@@ -31,6 +31,7 @@ public class Board extends Group {
 
         setPosition(Gdx.graphics.getWidth() / 2 - getWidth() / 2, Gdx.graphics.getHeight() / 2 - getHeight() / 2);
         //System.out.println(getX() + ", " + getY());
+
     }
 
 

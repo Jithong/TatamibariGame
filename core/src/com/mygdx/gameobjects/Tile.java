@@ -30,9 +30,12 @@ public class Tile extends Actor {//Actor vs Image?
     private int row;
     private int col;
 
-    private ShapeRenderer sr;
-    private Color color;
+    private boolean selected;
+
+    //private Color color; //this is part of Actor class
     private Symbol symbol;
+
+    private ShapeRenderer sr;
 
     public Tile(int row, int col){
         super();
@@ -42,12 +45,15 @@ public class Tile extends Actor {//Actor vs Image?
         setWidth(50);
         setHeight(50);
 
-        sr = new ShapeRenderer();
-        color = Color.WHITE;
+        setColor(Color.WHITE);
         symbol = Symbol.NONE;
+        selected = false;
 
+        sr = new ShapeRenderer();
         setBounds(getX(), getY(), getWidth(), getHeight());
 
+        //move control to stage or board since multiple actors
+        /*
         addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -65,13 +71,14 @@ public class Tile extends Actor {//Actor vs Image?
                 super.touchUp(event, x, y, pointer, button);
             }
         });
+        */
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
 
         sr.begin(ShapeRenderer.ShapeType.Filled);
-        sr.setColor(color);
+        sr.setColor(getColor());
         sr.rect(getParent().getX()+getX(), getParent().getY()+getY(), getWidth(), getHeight());
         sr.end();
 
@@ -79,6 +86,23 @@ public class Tile extends Actor {//Actor vs Image?
         sr.setColor(Color.BLACK);
         sr.rect(getParent().getX()+getX(), getParent().getY()+getY(), getWidth(), getHeight());
         sr.end();
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+
+    public void setSelected(){
+        selected = true;
     }
 
     public Symbol getSymbol(){
