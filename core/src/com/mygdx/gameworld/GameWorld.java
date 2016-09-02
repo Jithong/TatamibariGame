@@ -51,6 +51,7 @@ public class GameWorld extends Stage {
         firstTile = hit(tileHitPosition.x, tileHitPosition.y, false);//what was touchable again (3rd param)
         //Gdx.app.log("hit","registered by stage");
 
+        //encapsulate into a board function (something like addRegion)
         if (firstTile != null){
             tilesSelected.add(firstTile);
 
